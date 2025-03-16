@@ -7,6 +7,7 @@ with configuration management and temporary file handling.
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import shutil
 import yaml
@@ -42,6 +43,14 @@ def merge_configs(base_config: Dict[Any, Any], user_config: Dict[Any, Any]) -> D
     return merged
 
 app = FastAPI()
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,   
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 TEMP_DIR = os.path.join(os.path.dirname(__file__), "temp_audio")
 os.makedirs(TEMP_DIR, exist_ok=True)
