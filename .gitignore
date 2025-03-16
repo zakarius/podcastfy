@@ -121,3 +121,6 @@ dist/
 *.pyc
 __pycache__/
 *.egg-info/
+
+# Nginx proxy configuration
+podcastify.conf

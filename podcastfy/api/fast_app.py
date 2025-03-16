@@ -99,6 +99,8 @@ async def generate_podcast_endpoint(data: dict):
         # Generate podcast
         result = generate_podcast(
             urls=data.get('urls', []),
+            topic=data.get('topic', None),
+            text=data.get('text', None),
             conversation_config=conversation_config,
             tts_model=tts_model,
             longform=bool(data.get('is_long_form', False)),
@@ -127,6 +129,17 @@ async def serve_audio(filename: str):
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path)
+
+@app.delete("/audio/{filename}")
+@app.post("/audio/{filename}/delete")
+async def delete_audio(filename: str):
+    """ Delete Audio File From the Server"""
+    file_path = os.path.join(TEMP_DIR, filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return JSONResponse(content={"message": "File deleted successfully"})
+    else:
+        raise HTTPException(status_code=404, detail="File not found")
 
 @app.get("/health")
 async def healthcheck():

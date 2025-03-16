@@ -11,10 +11,21 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: ["CMD", "python3", "-c", "import podcastfy"]
+      test: [ "CMD", "python3", "-c", "import podcastfy" ]
       interval: 30s
       timeout: 10s
       retries: 3
+
+  podcastfy-api:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+    ports:
+      - "8002:8000"
 
   podcastfy-dev:
     build:
@@ -31,7 +42,7 @@ services:
     ports:
       - "8001:8000"
     healthcheck:
-      test: ["CMD", "python3", "-c", "import podcastfy"]
+      test: [ "CMD", "python3", "-c", "import podcastfy" ]
       interval: 30s
       timeout: 10s
       retries: 3
