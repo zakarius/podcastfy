@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  podcastfy-api:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+    ports:
+      - "8002:8000"

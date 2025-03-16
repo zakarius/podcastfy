@@ -124,3 +124,6 @@ __pycache__/
 
 # Nginx proxy configuration
 podcastify.conf
+
+# Docker
+docker-compose.yml

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /opt/venv:/opt/venv
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PYTHONPATH=/app
+    command: pytest -n auto --dist loadfile
