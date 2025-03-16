@@ -43,13 +43,12 @@ def merge_configs(base_config: Dict[Any, Any], user_config: Dict[Any, Any]) -> D
     return merged
 
 app = FastAPI()
-#allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],   
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
 )
 
 TEMP_DIR = os.path.join(os.path.dirname(__file__), "temp_audio")
