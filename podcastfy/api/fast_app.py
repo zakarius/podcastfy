@@ -68,7 +68,7 @@ async def generate_podcast_endpoint(data: dict):
         
         # Get TTS model and its configuration from base config
         tts_model = data.get('tts_model', base_config.get('text_to_speech', {}).get('default_tts_model', 'openai'))
-        tts_base_config = base_config.get('text_to_speech', {}).get(tts_model, {})
+        tts_base_config = data.get('text_to_speech', base_config.get('text_to_speech', {})).get(tts_model, {})
         
         # Get voices (use user-provided voices or fall back to defaults)
         voices = data.get('voices', {})
